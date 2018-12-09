@@ -1,0 +1,44 @@
+<app-header></app-header>
+<div class="form-design">
+  <nav>
+      <a routerLink="/" routerLinkActive="active">Back Now</a>       
+  </nav>
+  <form #myForm="ngForm"  class="form-group">
+    <label for="email">Enter E-mail</label>
+    <div class="input-group">  
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
+            <input type="text" name="email" [(ngModel)]="Email" required class="form-control" id="email"placeholder="Enter Your E-mail Address" #mail="ngModel" email/>
+    </div> 
+          <div  *ngIf="mail.touched && (mail.errors && mail.errors.required)" class="alert alert-danger"> 
+              Enter E-mail    
+          </div>
+          
+          <div  *ngIf="mail.errors && mail.errors.email" class="alert alert-danger"> 
+              Invalid email     
+          </div>
+      <br>
+      
+      <label for="password">Enter Password</label>
+
+      <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input type="password" name="password" [(ngModel)]="Pass" required class="form-control" id="password" placeholder="Enter Password" #pass="ngModel">
+      </div>
+      
+          <div  *ngIf="pass.touched && !pass.valid" class="alert alert-danger">
+              Password is required.              
+          </div> 
+      
+      <br>
+      
+      <button type="submit" [class.Disabled]="myForm.invalid" (click)="check()">Login! </button>
+     
+  </form>
+  
+  <!-- <h3  *ngIf="status">Welcome {{vaildEmail}}</h3>
+  <h4 *ngFor="let info of information">{{info.name}}<br></h4> -->
+  
+</div>
+<p-toast position="center"></p-toast>
+<app-footer></app-footer>
+

@@ -1,0 +1,159 @@
+
+<app-header></app-header>
+
+<div class="form-design">    
+  <nav>
+      <a routerLink="/login" routerLinkActive="active" class="btn btn-info btn-xs" >Log-In</a>       
+  </nav>
+<br>
+  <label class="radio-inline">
+    <input checked="checked" type="radio" class="companyrad" name="regitype">
+    &nbsp; Company
+  </label>
+<br>
+
+  <label class="radio-inline">
+    <input type="radio" class="agencyrad" name="regitype">
+    &nbsp; Agency
+  </label>
+<br><br>
+
+<form #comForm="ngForm"  (ngSubmit)="!comForm.form.valid" class="form-group" class="individualfild">
+    <sup class="text-danger">*</sup>
+    <label for="name">Enter Company Name</label>
+  <input type="text" name="name"  [(ngModel)]="Name" [readonly]="readonly" required id="txtonly" class="form-control" placeholder="Enter Company Name" #cname="ngModel" autocomplete="off">
+      <div  *ngIf="cname.touched && !cname.valid" class="alert alert-danger">
+          Name is required.              
+      </div>
+  <br>
+  <sup class="text-danger">*</sup>
+  <label for="email">Enter Company E-mail</label>   
+  <input type="text" name="email" (keyup)="check($event)" [(ngModel)]="Email" [readonly]="readonly" required class="form-control" id="comemail" placeholder="Enter Company E-mail Address" #cmail="ngModel" email/>
+  
+      <div *ngIf="EmailExist" class="alert alert-danger">
+            The E-mail Already Exist 
+      </div>
+      <div  *ngIf="cmail.touched && (cmail.errors && cmail.errors.required)" class="alert alert-danger"> 
+          Enter E-mail    
+      </div>
+      
+      <div  *ngIf="cmail.errors && cmail.errors.email" class="alert alert-danger"> 
+          Invalid email     
+      </div>
+  <br>
+  <sup class="text-danger">*</sup>
+  <label for="password">Enter Password</label>
+  <input type="password" name="password" [(ngModel)]="Pass"  required class="form-control" id="compassword" placeholder="Enter Password" #cpass="ngModel"  minlength="6" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%*#?&]{6,}$" >
+      <div  *ngIf="cpass.touched && !cpass.valid" class="alert alert-danger" >
+            Alphanumeric Password is required.              
+      </div> 
+  
+  <br>
+  <sup class="text-danger">*</sup>
+  <label for="confirmpassword">Enter Confirm Password</label>
+  <input type="password" name="cpassword"  required class="form-control" id="comconfirmpassword" placeholder="Enter Confirm Password"  ngModel #cconpass="ngModel" [equalTo]="pass" >
+      <div  *ngIf="cconpass.touched && (cconpass.errors && cconpass.errors.required)" class="alert alert-danger" minlength="6" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%*#?&]{6,}$" >
+             Alphanumeric Password is required       
+      </div>  
+      <div *ngIf="!(cconpass.errors && cconpass.errors.required)&&(cconpass.errors && cconpass.errors.equalTo)" class="alert alert-warning" >
+          Password does not match
+      </div>  
+  
+  <br>
+  <button type="submit" class="btn btn-success" [disabled]="!comForm.form.valid || selectedItems.length === 0 || EmailExist === true" (click)="onSubmit()">Submit ! </button>
+  
+</form>
+
+<form #myForm="ngForm"  (ngSubmit)="!myForm.form.valid" class="form-group" class="agencyfild">
+    <sup class="text-danger">*</sup>
+    <label for="name">Enter Agency Name</label>
+    <input type="text" name="name" [(ngModel)]="Name" [readonly]="readonly" required  class="form-control" placeholder="Enter Agency Name" #name="ngModel" autocomplete="off">
+        <div  *ngIf="name.touched && !name.valid" class="alert alert-danger">
+            Name is required.              
+        </div>
+    <br>
+    <sup class="text-danger">*</sup>
+    <label for="email">Enter Agency E-mail</label>   
+    <input type="text" name="email" (keyup)="check($event)" [(ngModel)]="Email" [readonly]="readonly" required class="form-control" id="emailaddress" placeholder="Enter Agency E-mail Address" #mail="ngModel" email />
+    
+        <div *ngIf="EmailExist" class="alert alert-danger">
+        The E-mail Already Exist 
+        </div>
+        
+        <div  *ngIf="mail.touched && (mail.errors && mail.errors.required)" class="alert alert-danger"> 
+            Enter E-mail    
+        </div>
+        
+        <div  *ngIf="mail.errors && mail.errors.email" class="alert alert-danger"> 
+            Invalid email     
+        </div>
+    <br>
+    
+    <sup class="text-danger">*</sup>
+    <label for="password">Enter Password</label>
+    <input type="password" name="password" [(ngModel)]="Pass"  required class="form-control" id="password" placeholder="Enter Password" #pass="ngModel"  minlength="6" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%*#?&]{6,}$" >
+        <div  *ngIf="pass.touched && !pass.valid" class="alert alert-danger" >
+              Alphanumeric Password is required.              
+        </div> 
+    
+    <br>
+    <sup class="text-danger">*</sup>
+    <label for="confirmpassword">Enter Confirm Password</label>
+    <input type="password" name="cpassword"  required class="form-control" id="confirmpassword" placeholder="Enter Confirm Password"  ngModel #conpass="ngModel" [equalTo]="pass" >
+        <div  *ngIf="conpass.touched && (conpass.errors && conpass.errors.required)" class="alert alert-danger" minlength="6" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%*#?&]{6,}$" >
+               Alphanumeric Password is required       
+        </div>  
+        <div *ngIf="!(conpass.errors && conpass.errors.required)&&(conpass.errors && conpass.errors.equalTo)" class="alert alert-warning" >
+            Password does not match
+        </div>  
+    
+    <br> 
+  
+    <button class="btn btn-success" type="submit" [class.Disabled]="!myForm.form.valid" (click)="onSubmit()">Submit ! </button>
+    
+</form> 
+<div class="dropdown">
+    <label for="name">Select Skills</label> 
+            <ng-multiselect-dropdown
+            [placeholder]="'Select Skills'"
+            [data]="skill"
+            [(ngModel)]="selectedItems"
+            [settings]="dropdownSettings"
+            >
+            </ng-multiselect-dropdown>
+</div>
+   
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#myModal">Upload Picture</button>(Optional)<br>
+
+    <button (click)="socialSignIn('linkedin')" class="fa fa-linkedin"> LinkedIn</button>&nbsp;
+    <button (click)="socialSignIn('google')"   class="fa fa-google">  Google</button> 
+    <br><br>
+    <p-toast></p-toast>
+
+</div>
+ <!-- Modal -->
+ <div class="modal fade" id="myModal" >
+        <div class="modal-dialog modal-sm">
+      
+            <!-- Modal content-->
+            <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">X</button>
+                    </div>
+                    
+                    <div class="modal-body">
+                      <img src id="output" class="img-fluid" height="100px" width="100" />
+                    </div>
+
+                    <div class="modal-footer">
+                            <input type="file" name="pic" id="pickImage" accept="image/*" (change)="onFileSelected($event)" >
+                            
+                            <button id="buttonid" (click)="inpClick()" class="btn btn-info btn-xs" >Pick now</button>&nbsp;
+                            <!-- <button class="btn btn-info btn-xs" >Upload now</button><br><br> -->
+                    </div>
+              
+            </div> 
+        </div>
+    </div>
+    

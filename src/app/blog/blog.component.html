@@ -1,0 +1,25 @@
+<!-- <div class="form-design">
+    <h4 *ngFor="let info of information" class="bg-info"><br></h4>
+</div> -->
+<app-header></app-header>
+<div class="styleroot">
+      <div class="table-responsive">          
+        <table class="table">
+          <thead>
+            <tr>
+              <th>NAME</th>
+              <th>E-MAIL</th>
+              <th>DETAILS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let info of information | paginate: { itemsPerPage: 4, currentPage: p }">
+              <td>{{info.name}}</td>
+              <td>{{info.email}}</td>
+              <td><button class="btn btn-info" (click)="details(info)">Click Here</button></td>
+            </tr>
+            <pagination-controls (pageChange)="p=$event" class="my-pagination"></pagination-controls>
+          </tbody>
+        </table>       
+      </div>
+</div>

@@ -1,0 +1,8 @@
+.styleroot{
+    padding-top: 10%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+.my-pagination /deep/ .ngx-pagination .current {
+    background: red;
+}

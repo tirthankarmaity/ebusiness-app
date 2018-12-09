@@ -1,0 +1,78 @@
+
+<div class="styleroot profile">
+
+  <div class="card">
+    <img [src]="profileImageUrl|async" class="img-rounded" alt="Profile picture Does not exist" ><br><br>
+
+    <p><b>Email </b>{{currentuser.Email}}</p>
+    <p><b>Skills </b>{{userskill}}</p>
+    
+    
+    <p><button data-toggle="modal" data-target="#myProfile">Update</button></p>
+  </div>
+</div>
+
+<div id="myProfile" class="modal fade" role="dialog">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+              <div class="modal-header">
+                  <button class="close" data-dismiss="modal">x</button>
+                  <p class="modal-title">My-Profile</p>
+              </div>
+              <div class="modal-body">
+                  
+                <!-- the update form -->
+                <form #myForm="ngForm"  (ngSubmit)="!myForm.form.valid" class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" [(ngModel)]="Name"  required  class="form-control" placeholder="Enter Name" #name="ngModel" autocomplete="off">
+                        <div  *ngIf="name.touched && !name.valid" class="alert alert-danger">
+                            Name is required.              
+                        </div>
+                    <br>
+                   
+                    <label for="email">Enter E-mail</label>   
+                    <input type="text" name="email" [(ngModel)]="Email"  required class="form-control" id="email"placeholder="Enter E-mail Address" #mail="ngModel" email/>
+                    
+                        <div  *ngIf="mail.touched && (mail.errors && mail.errors.required)" class="alert alert-danger"> 
+                            Enter E-mail    
+                        </div>
+                        
+                        <div  *ngIf="mail.errors && mail.errors.email" class="alert alert-danger"> 
+                            Invalid email     
+                        </div>
+                    <br>
+                   
+                    <label for="password">Enter Password</label>
+                    <input type="password" name="password" readonly disabled [(ngModel)]="Password"  required class="form-control" id="password" placeholder="Enter Password" #pass="ngModel"  minlength="6" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%*#?&]{6,}$" >
+                        <div  *ngIf="pass.touched && !pass.valid" class="alert alert-danger" >
+                              Alphanumeric Password is required.              
+                        </div> 
+                    
+                    <br>
+                   
+                    <label for="confirmpassword">Enter Confirm Password</label>
+                    <input type="password" name="cpassword"  required class="form-control" id="confirmpassword" placeholder="Enter Confirm Password"  ngModel #conpass="ngModel" [equalTo]="pass" >
+                        <div  *ngIf="conpass.touched && (conpass.errors && conpass.errors.required)" class="alert alert-danger" minlength="6" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%*#?&]{6,}$" >
+                               Alphanumeric Password is required       
+                        </div>  
+                        <div *ngIf="!(conpass.errors && conpass.errors.required)&&(conpass.errors && conpass.errors.equalTo)" class="alert alert-warning" >
+                            Password does not match
+                        </div>  
+                    
+                    <br> 
+                  
+                    <!-- <button class="btn btn-success" type="submit" (click)="onSubmit()">Submit ! </button> -->
+                    
+                </form> 
+              <!-- the update form -->
+              </div>
+              <div class="modal-footer">
+                  <button type="submit" class="btn btn-info btn-sm"  [disabled]="!myForm.form.valid" (click)="update()">save</button>
+                  <button type="submit" class="btn btn-info btn-sm"  (click)="delete()">Delete</button>
+                  <button data-dismiss="modal" class="btn btn-danger btn-sm">cancel</button>
+              </div>
+        </div>
+    </div>
+</div>
+<p-toast></p-toast>
